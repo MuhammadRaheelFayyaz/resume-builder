@@ -1,26 +1,87 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+body {
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* app/globals.css – add these lines */
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
 }
+/* app/globals.css – add at the bottom */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@media print {
+  /* Force page size and margins */
+  @page {
+    size: A4;
+    margin: 1.2cm;
+  }
+
+  /* Reset body and main container for print */
+  body {
+    background: white;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Ensure all content uses the full page width */
+  .print\:shadow-none,
+  .shadow-xl,
+  .shadow-lg,
+  .shadow-md,
+  .shadow-sm {
+    box-shadow: none !important;
+  }
+
+  /* Prevent content from being cut off */
+  .resume-section,
+  .experience-item,
+  .project-item,
+  .education-item,
+  .volunteering-item,
+  .award-item,
+  .publication-item,
+  .reference-item,
+  .language-item,
+  .certificate-item {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Ensure images/icons don't overflow (if any) */
+  img, svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Keep text at readable size (no scaling down too much) */
+  body, p, li, span, div {
+    font-size: 11pt !important;
+    line-height: 1.4 !important;
+  }
+
+  h1 {
+    font-size: 20pt !important;
+  }
+  h2 {
+    font-size: 16pt !important;
+  }
+  h3 {
+    font-size: 14pt !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media print {
+  /* For Template1 only – adjust content spacing */
+  .template1 {
+    margin: 0 !important;
+  
+  }
+
+  /* Also force the container to fill the page */
+
 }
+
