@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 body {
   font-family: Arial, Helvetica, sans-serif;
@@ -83,5 +84,13 @@ body {
 
   /* Also force the container to fill the page */
 
+}
+
+@layer components {
+  .prose-custom {
+    --tw-prose-body: #374151;
+    --tw-prose-headings: #1f2937;
+    --tw-prose-links: #4f46e5;
+  }
 }
 

@@ -8,11 +8,8 @@ import {
   GraduationCap,
   Award,
   BookOpen,
-  Globe,
   Link as LinkIcon,
   Users,
-  FileText,
-  Star,
   Languages,
 } from 'lucide-react';
 

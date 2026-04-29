@@ -1,215 +1,245 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-import { ResumeData, TemplateType } from '@/app/lib/types';
-import { loadResumeData, saveResumeData, loadSelectedTemplate, saveSelectedTemplate } from '@/app/lib/storage';
-import TemplateSelector from '@/app/components/TemplateSelector';
-import PersonalForm from '@/app/components/editor/PersonalForm';
-import ExperienceForm from '@/app/components/editor/ExperienceForm';
-import EducationForm from '@/app/components/editor/EducationForm';
-import SkillsForm from '@/app/components/editor/SkillsForm';
-import CertificatesForm from '@/app/components/editor/CertificatesForm';
-import LanguagesForm from '@/app/components/editor/LanguagesForm';
-import ProjectsForm from '@/app/components/editor/ProjectsForm';
-import VolunteeringForm from '@/app/components/editor/VolunteeringForm';
-import AwardsForm from '@/app/components/editor/AwardsForm';
-import HobbiesForm from '@/app/components/editor/HobbiesForm';
-import SocialLinksForm from '@/app/components/editor/SocialLinksForm';
-import ReferencesForm from '@/app/components/editor/ReferencesForm';
-import PublicationsForm from '@/app/components/editor/PublicationsForm';
-
+// app/page.tsx
+import Link from 'next/link';
+import { Metadata } from 'next';
 import Template1 from '@/app/components/templates/Template1';
 import Template2 from '@/app/components/templates/Template2';
 import Template3 from '@/app/components/templates/Template3';
-import Template4 from '@/app/components/templates/Template4';
-import Template5 from '@/app/components/templates/Template5';
-import Template6 from '@/app/components/templates/Template6';
-import Template7 from '@/app/components/templates/Template7';
-// Placeholder imports for templates 8-10, replace with actual components
-import Template8 from '@/app/components/templates/Template8';
-import Template9 from '@/app/components/templates/Template9'; 
-import Template10 from '@/app/components/templates/Template10';
-import Template11 from '@/app/components/templates/Template11';
-import Template12 from '@/app/components/templates/Template12';
-import Template13 from '@/app/components/templates/Template13';
-import Template14 from '@/app/components/templates/Template14';
-import Template15 from '@/app/components/templates/Template15';
-import Template16 from '@/app/components/templates/Template16';
-import Template17 from '@/app/components/templates/Template17';
-import Template18 from '@/app/components/templates/Template18';
-import Template19 from '@/app/components/templates/Template19';
-import Template20 from '@/app/components/templates/Template20';
-export default function Home() {
-  const [resumeData, setResumeData] = useState<ResumeData | null>(null);
-  const [selectedTemplate, setSelectedTemplate] = useState<TemplateType>('template1');
+import { ResumeData } from '@/app/lib/types';
 
-  useEffect(() => {
-    setResumeData(loadResumeData());
-    setSelectedTemplate(loadSelectedTemplate());
-  }, []);
+export const metadata: Metadata = {
+  title: 'Free Resume Builder – Create Professional Resumes Online',
+  description: 'Build, customize, and download your perfect resume with 20+ professional templates. No sign-up required. Free PDF download.',
+  keywords: 'resume builder, free resume templates, online resume maker, CV builder, professional resume',
+  openGraph: {
+    title: 'Free Resume Builder – Create Professional Resumes Online',
+    description: 'Build, customize, and download your perfect resume with 20+ professional templates.',
+    type: 'website',
+  },
+  alternates: {
+    canonical: 'https://yourdomain.com',
+  },
+};
 
-  useEffect(() => {
-    if (resumeData) saveResumeData(resumeData);
-  }, [resumeData]);
+// Sample data for preview (simplified but realistic)
+const sampleResume: ResumeData = {
+  personal: {
+    firstName: 'Jane',
+    lastName: 'Smith',
+    email: 'jane.smith@example.com',
+    phone: '+1 234 567 8900',
+    address: 'New York, NY',
+    title: 'Senior Product Designer',
+    summary: 'Creative product designer with 8+ years of experience in user-centered design and design systems.',
+  },
+  experience: [
+    {
+      id: '1',
+      title: 'Senior Product Designer',
+      company: 'Design Studio',
+      dateRange: '2022 – Present',
+      description: 'Lead design for flagship product, increased user engagement by 35%.',
+    },
+    {
+      id: '2',
+      title: 'UI/UX Designer',
+      company: 'Agency Co',
+      dateRange: '2019 – 2022',
+      description: 'Designed responsive web apps and maintained design systems.',
+    },
+  ],
+  education: [
+    {
+      id: '1',
+      degree: 'BFA in Graphic Design',
+      institution: 'School of Visual Arts',
+      dateRange: '2015 – 2019',
+      description: 'Graduated with honors.',
+    },
+  ],
+  skills: ['Figma', 'Sketch', 'User Research', 'Prototyping', 'Tailwind CSS'],
+  certificates: [],
+  languages: [],
+  projects: [],
+  volunteering: [],
+  awards: [],
+  publications: [],
+  hobbies: [],
+  socialLinks: [],
+  references: [],
+};
 
-  useEffect(() => {
-    saveSelectedTemplate(selectedTemplate);
-  }, [selectedTemplate]);
-
-  const updatePersonal = (field: keyof ResumeData['personal'], value: string) => {
-    if (!resumeData) return;
-    setResumeData({ ...resumeData, personal: { ...resumeData.personal, [field]: value } });
-  };
-
-  const handlePrint = () => window.print();
-
-  if (!resumeData) return <div className="p-8 text-center">Loading...</div>;
-
-  const templateComponents: Record<TemplateType, React.ComponentType<{ data: ResumeData }>> = {
-    template1: Template1,
-    template2: Template2,
-    template3: Template3,
-    template4: Template4,
-    template5: Template5,
-    template6: Template6,
-    template7: Template7, // Placeholder, replace with actual components
-    template8: Template8,
-    template9: Template9,
-    template10: Template10,
-    template11: Template11, // Placeholder, replace with actual components
-    template12: Template12,
-    template13: Template13,
-    template14: Template14,
-    template15: Template15,
-    template16: Template16,
-    template17: Template17,
-    template18: Template18,
-    template19: Template19,
-    template20: Template20,
-  };
-
-
-
-
+export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gray-100 print:bg-white">
-      <div className="container mx-auto px-4 py-8 print:p-0">
-        <div className="flex justify-between items-center mb-6 print:hidden">
-          <h1 className="text-3xl font-bold text-gray-800">Resume Builder</h1>
-          <button
-            onClick={handlePrint}
-            className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
+    <div className="bg-white">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-20">
+        <div className="container mx-auto px-4 text-center">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">
+            Create Your Professional Resume
+          </h1>
+          <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
+            Choose from 20+ beautiful templates, fill in your details, and download as PDF – completely free.
+          </p>
+          <Link
+            href="/builder"
+            className="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold text-lg hover:bg-gray-100 transition"
           >
-            Download as PDF
-          </button>
+            Create Resume Now
+          </Link>
+          <p className="text-sm mt-4 opacity-80">No sign‑up required • Free • Instant PDF</p>
         </div>
+      </section>
 
-        <div className="print:hidden mb-8">
-          <TemplateSelector selected={selectedTemplate} onChange={setSelectedTemplate} />
-        </div>
+      {/* Templates Showcase – with real live previews */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-4">Professional Templates</h2>
+          <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+            Choose from Classic, Modern, Minimal, Creative, and more – all ATS‑friendly.
+          </p>
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Template 1 - Classic */}
+            <div className="bg-white rounded-xl shadow-md overflow-hidden">
+              <div className="transform scale-90 origin-top transition-all duration-300 hover:scale-95">
+                <Template1 data={sampleResume} />
+              </div>
+              <div className="p-4 text-center border-t">
+                <h3 className="font-bold text-lg mb-1">Classic</h3>
+                <p className="text-gray-500 text-sm mb-2">Traditional two-column layout</p>
+                <Link href="/builder" className="text-indigo-600 text-sm font-medium hover:underline">
+                  Use this template →
+                </Link>
+              </div>
+            </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 print:block">
-          {/* Editor Panel */}
-          <div className="print:hidden bg-white rounded-lg shadow p-6 space-y-8">
-            <section>
-              <h2 className="text-xl font-bold mb-4">Personal Details</h2>
-              <PersonalForm data={resumeData.personal} onChange={updatePersonal} />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">Work Experience</h2>
-              <ExperienceForm
-                items={resumeData.experience}
-                onChange={(items) => setResumeData({ ...resumeData, experience: items })}
-              />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">Education</h2>
-              <EducationForm
-                items={resumeData.education}
-                onChange={(items) => setResumeData({ ...resumeData, education: items })}
-              />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">Skills</h2>
-              <SkillsForm
-                skills={resumeData.skills}
-                onChange={(skills) => setResumeData({ ...resumeData, skills })}
-              />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">Certifications</h2>
-              <CertificatesForm
-                items={resumeData.certificates}
-                onChange={(certificates) => setResumeData({ ...resumeData, certificates })}
-              />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">Languages</h2>
-              <LanguagesForm
-                items={resumeData.languages}
-                onChange={(languages) => setResumeData({ ...resumeData, languages })}
-              />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">Projects</h2>
-              <ProjectsForm
-                items={resumeData.projects}
-                onChange={(projects) => setResumeData({ ...resumeData, projects })}
-              />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">Volunteering</h2>
-              <VolunteeringForm
-                items={resumeData.volunteering}
-                onChange={(volunteering) => setResumeData({ ...resumeData, volunteering })}
-              />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">Awards & Honors</h2>
-              <AwardsForm
-                items={resumeData.awards}
-                onChange={(awards) => setResumeData({ ...resumeData, awards })}
-              />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">Hobbies & Interests</h2>
-              <HobbiesForm
-                items={resumeData.hobbies}
-                onChange={(hobbies) => setResumeData({ ...resumeData, hobbies })}
-              />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">Social Links</h2>
-              <SocialLinksForm
-                items={resumeData.socialLinks}
-                onChange={(socialLinks) => setResumeData({ ...resumeData, socialLinks })}
-              />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">References</h2>
-              <ReferencesForm
-                items={resumeData.references}
-                onChange={(references) => setResumeData({ ...resumeData, references })}
-              />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">Publications</h2>
-              <PublicationsForm
-                items={resumeData.publications}
-                onChange={(publications) => setResumeData({ ...resumeData, publications })}
-              />
-            </section>
+            {/* Template 2 - Modern */}
+            <div className="bg-white rounded-xl shadow-md overflow-hidden">
+              <div className="transform scale-90 origin-top transition-all duration-300 hover:scale-95">
+                <Template2 data={sampleResume} />
+              </div>
+              <div className="p-4 text-center border-t">
+                <h3 className="font-bold text-lg mb-1">Modern</h3>
+                <p className="text-gray-500 text-sm mb-2">Bold header with gradient</p>
+                <Link href="/builder" className="text-indigo-600 text-sm font-medium hover:underline">
+                  Use this template →
+                </Link>
+              </div>
+            </div>
+
+            {/* Template 3 - Minimal */}
+            <div className="bg-white rounded-xl shadow-md overflow-hidden">
+              <div className="transform scale-90 origin-top transition-all duration-300 hover:scale-95">
+                <Template3 data={sampleResume} />
+              </div>
+              <div className="p-4 text-center border-t">
+                <h3 className="font-bold text-lg mb-1">Minimal</h3>
+                <p className="text-gray-500 text-sm mb-2">Clean single column</p>
+                <Link href="/builder" className="text-indigo-600 text-sm font-medium hover:underline">
+                  Use this template →
+                </Link>
+              </div>
+            </div>
           </div>
-
-          {/* Preview Panel */}
-          <div className="print:mt-0">
-            {(() => {
-              const Component = templateComponents[selectedTemplate];
-              return <Component data={resumeData} />;
-            })()}
+          <div className="text-center mt-8">
+            <Link href="/builder" className="text-indigo-600 font-semibold hover:underline">
+              View all 20+ templates →
+            </Link>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Features (unchanged) */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Why Use Our Resume Builder?</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h3 className="font-bold text-xl mb-2">ATS‑Friendly</h3>
+              <p className="text-gray-600">All templates are optimised to pass automated screening.</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3 className="font-bold text-xl mb-2">Live Preview</h3>
+              <p className="text-gray-600">See changes instantly as you type.</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                </svg>
+              </div>
+              <h3 className="font-bold text-xl mb-2">One‑Click PDF</h3>
+              <p className="text-gray-600">Download your resume as a print‑ready PDF.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="bg-indigo-50 py-16">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-4">Ready to Land Your Dream Job?</h2>
+          <p className="text-lg text-gray-700 mb-8">
+            Create your professional resume in minutes – no credit card required.
+          </p>
+          <Link
+            href="/builder"
+            className="bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-indigo-700 transition"
+          >
+            Start Building
+          </Link>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <h2 className="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="font-semibold text-xl">Do I need to sign up to use the resume builder?</h3>
+              <p className="text-gray-600 mt-1">No! You can build and download your resume completely free without creating an account.</p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-xl">Are the templates ATS‑friendly?</h3>
+              <p className="text-gray-600 mt-1">Yes, all our templates use standard formatting that is readable by Applicant Tracking Systems.</p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-xl">Can I save and share my resume?</h3>
+              <p className="text-gray-600 mt-1">Yes – create a free account to save your resume and get a shareable link.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* JSON‑LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "Resume Builder",
+            "description": "Create professional resumes with 20+ templates. Free PDF download.",
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "All",
+            "offer": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+          }),
+        }}
+      />
     </div>
   );
 }
