@@ -14,7 +14,7 @@ export default function NavBar() {
       <nav className="bg-white shadow-md print:hidden">
         <div className="container mx-auto px-4 py-3 flex justify-between items-center flex-wrap gap-4">
           <Link href="/" className="text-xl font-bold text-indigo-600">
-            Resume Builder
+            My Resume Builder
           </Link>
           <div className="flex items-center gap-4">
             <Link href="/" className="text-gray-700 hover:text-indigo-600">Home</Link>

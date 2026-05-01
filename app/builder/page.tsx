@@ -44,6 +44,8 @@ import Template18 from '@/app/components/templates/Template18';
 import Template19 from '@/app/components/templates/Template19';
 import Template20 from '@/app/components/templates/Template20';
 import Spinner from '@/app/components/Spinner';
+import JsonLd from '@/app/components/JsonLd';
+import { resume } from 'react-dom/server.node';
 
 const templateComponents: Record<TemplateType, React.ComponentType<{ data: ResumeData }>> = {
   template1: Template1,
@@ -143,94 +145,130 @@ export default function Home() {
   const SelectedTemplate = templateComponents[selectedTemplate];
 
   return (
-    <div className="min-h-screen bg-gray-100 print:bg-white">
-      <div className="container mx-auto px-4 py-8 print:p-0">
-        <div className="flex justify-between items-center mb-6 print:hidden">
-          <h1 className="text-3xl font-bold text-gray-800">Resume Builder</h1>
-          <div className="flex gap-3">
-            <button onClick={() => window.print()} className="bg-green-600 text-white px-4 py-2 rounded-md">
-              Download PDF
-            </button>
-            <button
-              onClick={saveAndShare}
-              disabled={isSaving}
-              className="bg-purple-600 text-white px-4 py-2 rounded-md disabled:opacity-50"
-            >
-              {isSaving ? 'Saving...' : 'Save & Share'}
-            </button>
+    <>
+     <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "name": resumeData.personal.firstName + ' ' + resumeData.personal.lastName,
+          "jobTitle": resumeData.personal.title,
+          "email": resumeData.personal.email,
+          "telephone": resumeData.personal.phone,
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": resumeData.personal.address
+          },
+          "hasOccupation": {
+            "@type": "Occupation",
+            "name": resumeData.personal.title,
+            "skills": resumeData.skills.join(", ")
+          }
+        }}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "CreativeWork",
+          "name": `Resume of ${resumeData.personal.firstName} ${resumeData.personal.lastName}`,
+          "author": {
+            "@type": "Person",
+            "name": `${resumeData.personal.firstName} ${resumeData.personal.lastName}`
+          },
+          "about": resumeData.personal.summary,
+          "dateCreated": new Date().toISOString().split('T')[0],
+          "creativeWorkStatus": "Completed",
+          "url": `https://mycvbuilder.info/resume/builder`
+        }}
+      />
+      <div className="min-h-screen bg-gray-100 print:bg-white">
+        <div className="container mx-auto px-4 py-8 print:p-0">
+          <div className="flex justify-between items-center mb-6 print:hidden">
+            <h1 className="text-3xl font-bold text-gray-800">Resume Builder</h1>
+            <div className="flex gap-3">
+              <button onClick={() => window.print()} className="bg-green-600 text-white px-4 py-2 rounded-md">
+                Download PDF
+              </button>
+              <button
+                onClick={saveAndShare}
+                disabled={isSaving}
+                className="bg-purple-600 text-white px-4 py-2 rounded-md disabled:opacity-50"
+              >
+                {isSaving ? 'Saving...' : 'Save & Share'}
+              </button>
+            </div>
+          </div>
+
+          <div className="print:hidden mb-6">
+            <TemplateSelector selected={selectedTemplate} onChange={setSelectedTemplate} />
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8 print:block">
+            {/* Editor panel */}
+            <div className="print:hidden bg-white rounded-lg shadow p-6 space-y-8">
+              <section>
+                <h2 className="text-xl font-bold mb-4">Personal Details</h2>
+                <PersonalForm data={resumeData.personal} onChange={updatePersonal} />
+              </section>
+              <section>
+                <h2 className="text-xl font-bold mb-4">Experience</h2>
+                <ExperienceForm items={resumeData.experience} onChange={(items) => setResumeData({ ...resumeData, experience: items })} />
+              </section>
+              <section>
+                <h2 className="text-xl font-bold mb-4">Education</h2>
+                <EducationForm items={resumeData.education} onChange={(items) => setResumeData({ ...resumeData, education: items })} />
+              </section>
+              <section>
+                <h2 className="text-xl font-bold mb-4">Skills</h2>
+                <SkillsForm skills={resumeData.skills} onChange={(skills) => setResumeData({ ...resumeData, skills })} />
+              </section>
+              <section>
+                <h2 className="text-xl font-bold mb-4">Certifications</h2>
+                <CertificatesForm items={resumeData.certificates} onChange={(items) => setResumeData({ ...resumeData, certificates: items })} />
+              </section>
+              <section>
+                <h2 className="text-xl font-bold mb-4">Languages</h2>
+                <LanguagesForm items={resumeData.languages} onChange={(items) => setResumeData({ ...resumeData, languages: items })} />
+              </section>
+              <section>
+                <h2 className="text-xl font-bold mb-4">Projects</h2>
+                <ProjectsForm items={resumeData.projects} onChange={(items) => setResumeData({ ...resumeData, projects: items })} />
+              </section>
+              <section>
+                <h2 className="text-xl font-bold mb-4">Volunteering</h2>
+                <VolunteeringForm items={resumeData.volunteering} onChange={(items) => setResumeData({ ...resumeData, volunteering: items })} />
+              </section>
+              <section>
+                <h2 className="text-xl font-bold mb-4">Awards & Honors</h2>
+                <AwardsForm items={resumeData.awards} onChange={(items) => setResumeData({ ...resumeData, awards: items })} />
+              </section>
+              <section>
+                <h2 className="text-xl font-bold mb-4">Publications</h2>
+                <PublicationsForm items={resumeData.publications} onChange={(items) => setResumeData({ ...resumeData, publications: items })} />
+              </section>
+              <section>
+                <h2 className="text-xl font-bold mb-4">Hobbies & Interests</h2>
+                <HobbiesForm items={resumeData.hobbies} onChange={(items) => setResumeData({ ...resumeData, hobbies: items })} />
+              </section>
+              <section>
+                <h2 className="text-xl font-bold mb-4">Social Links</h2>
+                <SocialLinksForm items={resumeData.socialLinks} onChange={(items) => setResumeData({ ...resumeData, socialLinks: items })} />
+              </section>
+              <section>
+                <h2 className="text-xl font-bold mb-4">References</h2>
+                <ReferencesForm items={resumeData.references} onChange={(items) => setResumeData({ ...resumeData, references: items })} />
+              </section>
+            </div>
+
+            {/* Live preview */}
+            <div className="print:mt-0">
+              <SelectedTemplate data={resumeData} />
+            </div>
           </div>
         </div>
 
-        <div className="print:hidden mb-6">
-          <TemplateSelector selected={selectedTemplate} onChange={setSelectedTemplate} />
-        </div>
-
-        <div className="grid lg:grid-cols-2 gap-8 print:block">
-          {/* Editor panel */}
-          <div className="print:hidden bg-white rounded-lg shadow p-6 space-y-8">
-            <section>
-              <h2 className="text-xl font-bold mb-4">Personal Details</h2>
-              <PersonalForm data={resumeData.personal} onChange={updatePersonal} />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">Experience</h2>
-              <ExperienceForm items={resumeData.experience} onChange={(items) => setResumeData({ ...resumeData, experience: items })} />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">Education</h2>
-              <EducationForm items={resumeData.education} onChange={(items) => setResumeData({ ...resumeData, education: items })} />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">Skills</h2>
-              <SkillsForm skills={resumeData.skills} onChange={(skills) => setResumeData({ ...resumeData, skills })} />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">Certifications</h2>
-              <CertificatesForm items={resumeData.certificates} onChange={(items) => setResumeData({ ...resumeData, certificates: items })} />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">Languages</h2>
-              <LanguagesForm items={resumeData.languages} onChange={(items) => setResumeData({ ...resumeData, languages: items })} />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">Projects</h2>
-              <ProjectsForm items={resumeData.projects} onChange={(items) => setResumeData({ ...resumeData, projects: items })} />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">Volunteering</h2>
-              <VolunteeringForm items={resumeData.volunteering} onChange={(items) => setResumeData({ ...resumeData, volunteering: items })} />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">Awards & Honors</h2>
-              <AwardsForm items={resumeData.awards} onChange={(items) => setResumeData({ ...resumeData, awards: items })} />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">Publications</h2>
-              <PublicationsForm items={resumeData.publications} onChange={(items) => setResumeData({ ...resumeData, publications: items })} />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">Hobbies & Interests</h2>
-              <HobbiesForm items={resumeData.hobbies} onChange={(items) => setResumeData({ ...resumeData, hobbies: items })} />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">Social Links</h2>
-              <SocialLinksForm items={resumeData.socialLinks} onChange={(items) => setResumeData({ ...resumeData, socialLinks: items })} />
-            </section>
-            <section>
-              <h2 className="text-xl font-bold mb-4">References</h2>
-              <ReferencesForm items={resumeData.references} onChange={(items) => setResumeData({ ...resumeData, references: items })} />
-            </section>
-          </div>
-
-          {/* Live preview */}
-          <div className="print:mt-0">
-            <SelectedTemplate data={resumeData} />
-          </div>
-        </div>
+        <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
+        <ShareModal isOpen={isShareModalOpen} onClose={() => setIsShareModalOpen(false)} shareUrl={shareUrl} />
       </div>
-
-      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
-      <ShareModal isOpen={isShareModalOpen} onClose={() => setIsShareModalOpen(false)} shareUrl={shareUrl} />
-    </div>
+    </>
   );
 }

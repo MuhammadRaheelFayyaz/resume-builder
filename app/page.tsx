@@ -4,6 +4,8 @@ import { Metadata } from 'next';
 import Template1 from '@/app/components/templates/Template1';
 import Template2 from '@/app/components/templates/Template2';
 import Template3 from '@/app/components/templates/Template3';
+import JsonLd from '@/app/components/JsonLd';
+
 import { ResumeData } from '@/app/lib/types';
 
 export const metadata: Metadata = {
@@ -70,6 +72,74 @@ const sampleResume: ResumeData = {
 
 export default function HomePage() {
   return (
+    <>
+    <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "Resume Builder",
+          "description": "Create professional resumes with 20+ templates. Free PDF download.",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "All",
+          "offer": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "url": "https://mycvbuilder.info",
+          "image": "https://mycvbuilder.info/og-image.jpg",
+        }}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "Resume Builder",
+          "url": "https://mycvbuilder.info",
+          "logo": "https://mycvbuilder.info/logo.png",
+          "sameAs": [
+            "https://github.com/MuhammadRaheelFayyaz",
+            "https://www.linkedin.com/in/muhammad-raheel-841819174/"
+          ],
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "raheelfayyazi@gmail.com",
+            "contactType": "customer support"
+          }
+        }}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Do I need to sign up to use the resume builder?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No! You can build and download your resume completely free without creating an account."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Are the templates ATS‑friendly?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, all our templates use standard formatting that is readable by Applicant Tracking Systems."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I save and share my resume?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes – create a free account to save your resume and get a shareable link."
+              }
+            }
+          ]
+        }}
+      />
     <div className="bg-white">
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-20">
@@ -242,5 +312,6 @@ export default function HomePage() {
         }}
       />
     </div>
+    </>
   );
 }

@@ -1,6 +1,5 @@
 // app/builder/layout.tsx
 import { Metadata } from 'next';
-
 export const metadata: Metadata = {
   title: 'Resume Builder – Create & Download Professional Resumes',
   description: 'Use our free online resume builder with 20+ templates. Edit, preview, and download PDF. No sign-up required.',

@@ -1,6 +1,7 @@
 // app/blog/[slug]/page.tsx
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
+import JsonLd from '@/app/components/JsonLd';
 
 // Sample posts content (could be fetched from CMS later)
 const postsContent: Record<string, { title: string; date: string; content: string }> = {
@@ -54,16 +55,45 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   if (!post) notFound();
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="container mx-auto px-4 max-w-3xl">
-        <article className="bg-white rounded-lg shadow-md p-8">
-          <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
-          <p className="text-gray-500 mb-6">{post.date}</p>
-        <div className="prose prose-indigo max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} />          <div className="mt-8 pt-4 border-t">
-            <a href="/blog" className="text-indigo-600 hover:underline">← Back to all posts</a>
-          </div>
-        </article>
+    <>
+        <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "headline": post.title,
+          "datePublished": post.date,
+          "dateModified": post.date,
+          "author": {
+            "@type": "Organization",
+            "name": "Resume Builder Team"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "Resume Builder",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mycvbuilder.info/logo.png"
+            }
+          },
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": `https://mycvbuilder.info/blog/${slug}`
+          },
+          "description": post.content.replace(/<[^>]*>/g, '').slice(0, 200)
+        }}
+      />
+
+      <div className="min-h-screen bg-gray-50 py-12">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <article className="bg-white rounded-lg shadow-md p-8">
+            <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
+            <p className="text-gray-500 mb-6">{post.date}</p>
+          <div className="prose prose-indigo max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} />          <div className="mt-8 pt-4 border-t">
+              <a href="/blog" className="text-indigo-600 hover:underline">← Back to all posts</a>
+            </div>
+          </article>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
