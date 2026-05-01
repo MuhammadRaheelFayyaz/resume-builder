@@ -97,10 +97,10 @@ export default function Home() {
   };
 
   const saveAndShare = async () => {
-    if (!user) {
-      setIsLoginModalOpen(true);
-      return;
-    }
+    // if (!user) {
+    //   setIsLoginModalOpen(true);
+    //   return;
+    // }
     if (!resumeData) return;
     setIsSaving(true);
     try {
@@ -109,7 +109,7 @@ export default function Home() {
         .insert({
           resume_data: resumeData,
           template: selectedTemplate,
-          user_id: user.id,
+          // user_id: user.id,
         })
         .select('id')
         .single();

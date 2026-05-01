@@ -21,8 +21,8 @@ export default function NavBar() {
             <Link href="/builder" className="text-gray-700 hover:text-indigo-600">Builder</Link>
             <Link href="/blog" className="text-gray-700 hover:text-indigo-600">Blog</Link>
             <Link href="/about" className="text-gray-700 hover:text-indigo-600">About</Link>
-            <Link href="/contact" className="text-gray-700 hover:text-indigo-600">Contact</Link>
-            {user ? (
+            <Link href="/contact" className="text-gray-700 hover:text-indigo-600">Contact/Hire Developer</Link>
+            {/* {user ? (
               <div className="flex items-center gap-3">
                 <span className="text-sm text-gray-600">{user.email}</span>
                 <button
@@ -39,7 +39,7 @@ export default function NavBar() {
               >
                 Login / Sign Up
               </button>
-            )}
+            )} */}
           </div>
         </div>
       </nav>

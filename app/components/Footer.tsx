@@ -1,6 +1,20 @@
 // components/Footer.tsx
+import { url } from 'inspector';
 import Link from 'next/link';
 
+const DEVELOPER_NAME = process.env.DEVELOPER_NAME || 'MUHAMMAD RAHLEEL';
+const DEVELOPER_EMAIL = process.env.DEVELOPER_EMAIL || 'raheelfayyazid@gmail.com';
+const GITHUB_URL = process.env.GITHUB_URL || 'https://github.com/MuhammadRaheelFayyaz';
+const LINKEDIN_URL = process.env.LINKEDIN_URL || 'https://www.linkedin.com/in/muhammad-raheel-841819174/';
+const PHONE_NUMBER = process.env.PHONE_NUMBER || '+92 348 6226883';
+const PORTFOLIO_URL = process.env.PORTFOLIO_URL || 'https://raheel-portfolio-mu.vercel.app/';
+
+
+const INCOMING_PROJECTS = [
+  { name: 'TRADING SIGNAL GENERATOR', emoji: '✨', url: 'https://trading-signal-six.vercel.app/' },
+  { name: 'Image&Pdf Tool', emoji: '📊', url: 'https://image-pdf-tool-kappa.vercel.app/' },
+  { name: 'Investment Portfolio Tracker Dashboard', emoji: '🎯' },
+];
 export default function Footer() {
   return (
     <footer className="bg-gray-900 text-gray-300 print:hidden">
@@ -15,12 +29,12 @@ export default function Footer() {
             <p className="text-sm">
               Built by{' '}
               <a
-                href="https://muhammadfaizan.site"  // Replace with your actual portfolio URL
+                href={PORTFOLIO_URL} // Replace with your actual portfolio URL
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-indigo-400 hover:text-indigo-300"
               >
-                Muhammad Faizan
+                {DEVELOPER_NAME}
               </a>
             </p>
           </div>
@@ -34,12 +48,20 @@ export default function Footer() {
                   href="mailto:faizan@example.com"  // Replace with your email
                   className="hover:text-indigo-400"
                 >
-                  faizan@example.com
+                  {DEVELOPER_EMAIL}
                 </a>
               </li>
               <li>
                 <a
-                  href="https://github.com/yourusername"  // Optional
+                  href={`tel:${PHONE_NUMBER}`}
+                  className="hover:text-indigo-400"
+                >
+                  {PHONE_NUMBER}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={GITHUB_URL}  // Optional
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-indigo-400"
@@ -49,7 +71,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="https://linkedin.com/in/yourusername"  // Optional
+                  href={LINKEDIN_URL}  // Optional
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-indigo-400"
@@ -57,6 +79,7 @@ export default function Footer() {
                   LinkedIn
                 </a>
               </li>
+              
             </ul>
           </div>
 
@@ -64,9 +87,19 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold text-white mb-3">Upcoming Projects</h3>
             <ul className="space-y-2 text-sm">
-              <li>✨ AI Cover Letter Generator</li>
-              <li>📊 Portfolio Builder</li>
-              <li>🎯 Job Tracker Dashboard</li>
+              {INCOMING_PROJECTS.map((project) => (
+                <li key={project.name}>
+                  {project.url ? (
+                    <a href={project.url} target="_blank" rel="noopener noreferrer" className="hover:text-indigo-400">
+                      {project.emoji} {project.name}
+                    </a>
+                  ) : (
+                    <span>
+                      {project.emoji} {project.name} (coming soon)
+                    </span>
+                  )}
+                </li>
+              ))}
             </ul>
           </div>
         </div>

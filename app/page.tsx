@@ -215,7 +215,8 @@ export default function HomePage() {
             </div>
             <div>
               <h3 className="font-semibold text-xl">Can I save and share my resume?</h3>
-              <p className="text-gray-600 mt-1">Yes – create a free account to save your resume and get a shareable link.</p>
+              {/* <p className="text-gray-600 mt-1">Yes – create a free account to save your resume and get a shareable link.</p> */}
+              <p className="text-gray-600 mt-1">Yes – create a free account to save your resume and can share it with others.</p>
             </div>
           </div>
         </div>
