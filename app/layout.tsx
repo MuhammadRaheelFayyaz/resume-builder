@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { AuthProvider } from '@/app/contexts/AuthContext';
-import { Geist, Geist_Mono } from "next/font/google";
 import NavBar from '@/app/components/NavBar';
 import Footer from "@/app/components/Footer";
 
@@ -23,6 +22,12 @@ export default function RootLayout({
       lang="en"
       className={`h-full antialiased`}
     >
+      <head>
+         <link
+            rel="icon"
+            href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='15' y='10' width='70' height='80' rx='10' fill='%234f46e5'/><path fill='white' d='M35 30h30M35 45h30M35 60h20' stroke='white' stroke-width='6' stroke-linecap='round'/><circle cx='70' cy='70' r='12' fill='%23f59e0b'/><path d='M70 65v10M65 70h10' stroke='white' stroke-width='3'/></svg>"
+          />
+      </head>
       <body className="min-h-full flex flex-col">
         <AuthProvider>
           <NavBar />
