@@ -43,6 +43,7 @@ import Template17 from '@/app/components/templates/Template17';
 import Template18 from '@/app/components/templates/Template18';
 import Template19 from '@/app/components/templates/Template19';
 import Template20 from '@/app/components/templates/Template20';
+import Spinner from '@/app/components/Spinner';
 
 const templateComponents: Record<TemplateType, React.ComponentType<{ data: ResumeData }>> = {
   template1: Template1,
@@ -128,7 +129,15 @@ export default function Home() {
   };
 
   if (!resumeData) {
-    return <div className="p-8 text-center">Loading...</div>;
+    return <div className="min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <div className='flex justify-center mb-4'>
+          <Spinner />
+        </div>
+        <h2 className="text-2xl font-bold mb-4">Loading...</h2>
+        <p className="text-gray-600">Preparing your resume builder. Please wait a moment.</p>
+      </div>
+    </div>;
   }
 
   const SelectedTemplate = templateComponents[selectedTemplate];
