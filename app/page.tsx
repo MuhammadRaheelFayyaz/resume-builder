@@ -78,7 +78,7 @@ export default function HomePage() {
           "@context": "https://schema.org",
           "@type": "WebApplication",
           "name": "Resume Builder",
-          "description": "Create professional resumes with 20+ templates. Free PDF download.",
+          "description": "Free resume builder with 20+ professional templates. Create, edit, and download your resume as PDF instantly. No credit card needed.",
           "applicationCategory": "BusinessApplication",
           "operatingSystem": "All",
           "offer": {
@@ -145,18 +145,17 @@ export default function HomePage() {
       <section className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-20">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            Create Your Professional Resume
+            Free Resume Builder – Create Your Professional Resume in Minutes
           </h1>
           <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
-            Choose from 20+ beautiful templates, fill in your details, and download as PDF – completely free.
-          </p>
+            Our free resume builder helps you create a professional resume in minutes. Choose from 20+ ATS‑friendly templates, add your details, and download as PDF – no sign‑up required.          </p>
           <Link
             href="/builder"
             className="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold text-lg hover:bg-gray-100 transition"
           >
-            Create Resume Now
+            Create My Resume Now
           </Link>
-          <p className="text-sm mt-4 opacity-80">No sign‑up required • Free • Instant PDF</p>
+          <p className="text-sm mt-4 opacity-80">20+ templates, ATS‑friendly, one‑click PDF, no sign‑up.</p>
         </div>
       </section>
 
