@@ -83,7 +83,8 @@ async function getResume(id: string) {
 
 // Generate dynamic metadata
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  const resume = await getResume(params.id);
+  const { id } = await params; 
+  const resume = await getResume(id);
   if (!resume) {
     return {
       title: 'Resume Not Found',

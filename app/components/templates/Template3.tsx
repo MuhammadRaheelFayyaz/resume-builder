@@ -46,8 +46,6 @@ export default function Template3({ data }: Template3Props) {
         )}
       </div>
 
-      <hr className="border-gray-200 mb-6" />
-
       {/* Profile */}
       <section className="resume-section mb-6">
         <h2 className="text-xl font-bold text-gray-800 border-b border-gray-200 pb-1 mb-3">
