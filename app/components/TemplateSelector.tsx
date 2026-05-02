@@ -16,7 +16,7 @@ const templates: { id: TemplateType; label: string }[] = [
   { id: 'template7', label: 'Professional' },
   { id: 'template8', label: 'Right Sidebar' },
   { id: 'template9', label: 'Creative Banner' },
-   { id: 'template10', label: 'Timeline' },
+  { id: 'template10', label: 'Timeline' },
   { id: 'template11', label: 'Photo Minimal' },
   { id: 'template12', label: 'Teal Sidebar' },
   { id: 'template13', label: 'Top Panel' },
@@ -27,25 +27,26 @@ const templates: { id: TemplateType; label: string }[] = [
   { id: 'template18', label: 'Ultra Minimal' },
   { id: 'template19', label: 'Academic' },
   { id: 'template20', label: 'Portfolio' },
-
 ];
 
 export default function TemplateSelector({ selected, onChange }: TemplateSelectorProps) {
   return (
-    <div className="flex flex-wrap gap-4 mb-6">
-      {templates.map((template) => (
-        <button
-          key={template.id}
-          onClick={() => onChange(template.id)}
-          className={`px-4 py-2 rounded-md transition ${
-            selected === template.id
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-          }`}
-        >
-          {template.label}
-        </button>
-      ))}
+    <div className="w-full overflow-x-auto pb-2 mb-6 scrollbar-thin">
+      <div className="flex flex-nowrap md:flex-wrap gap-3 md:gap-4 min-w-min">
+        {templates.map((template) => (
+          <button
+            key={template.id}
+            onClick={() => onChange(template.id)}
+            className={`px-4 py-2 rounded-md transition whitespace-nowrap touch-manipulation ${
+              selected === template.id
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            }`}
+          >
+            {template.label}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }

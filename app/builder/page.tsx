@@ -182,9 +182,9 @@ export default function Home() {
       />
       <div className="min-h-screen bg-gray-100 print:bg-white">
         <div className="container mx-auto px-4 py-8 print:p-0">
-          <div className="flex justify-between items-center mb-6 print:hidden">
+          <div className="flex flex-wrap md:flex-nowrap justify-between items-center mb-6 print:hidden">
             <h1 className="text-3xl font-bold text-gray-800">Resume Builder</h1>
-            <div className="flex gap-3">
+            <div className="flex gap-3 mt-4 md:mt-0">
               <button onClick={() => window.print()} className="bg-green-600 text-white px-4 py-2 rounded-md">
                 Download PDF
               </button>
