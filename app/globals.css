@@ -24,8 +24,8 @@ body {
   /* Reset body and main container for print */
   body {
     background: white;
-    margin: 0;
-    padding: 0;
+    /* margin: 0;
+    padding: 0; */
   }
 
   /* Ensure all content uses the full page width */
@@ -34,7 +34,7 @@ body {
   .shadow-lg,
   .shadow-md,
   .shadow-sm {
-    box-shadow: none !important;
+    /* box-shadow: none !important; */
   }
 
   /* Prevent content from being cut off */
