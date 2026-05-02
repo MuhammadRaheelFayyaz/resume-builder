@@ -1,15 +1,11 @@
-# Allow all crawlers access
 User-agent: *
 Allow: /
 
-# Sitemap location (update with your actual domain)
 Sitemap: https://mycvbuilder.info/sitemap.xml
 
-# Disallow admin or private routes (if any)
 Disallow: /api/
-Disallow: /builder?*          # prevent indexing of query-param variations
+Disallow: /builder?*
 Disallow: /reset-password
-Disallow: /resume/*?share=true # optional: avoid duplicate share links
+Disallow: /resume/*?share=true
 
-# Crawl delay (polite for older bots)
 Crawl-delay: 1
