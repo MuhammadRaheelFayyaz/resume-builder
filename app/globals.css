@@ -17,7 +17,7 @@ body {
 @media print {
   /* Force page size and margins */
   @page {
-    size: A4;
+    /* size: A4; */
     margin: 1.2cm;
   }
 
